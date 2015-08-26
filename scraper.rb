@@ -30,7 +30,6 @@ require 'pry'
 
 @pages.map { |c| WikiData::Category.new(c).wikidata_ids }.flatten.uniq.each_with_index do |id, i|
   puts i if (i % 50).zero?
-  # data = WikiData::Fetcher.new(id: id).data('he') or next
-  data = WikiData::Fetcher.new(id: id).data or next
+  data = WikiData::Fetcher.new(id: id).data('he') or next
   ScraperWiki.save_sqlite([:id], data) rescue binding.pry
 end
