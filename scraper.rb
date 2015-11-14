@@ -4,6 +4,7 @@
 require 'scraperwiki'
 require 'wikidata/fetcher'
 require 'pry'
+require 'rest-client'
 
 @pages = [
   'Category:Members of the 20th Knesset (2015–)',
@@ -33,3 +34,4 @@ require 'pry'
   data = WikiData::Fetcher.new(id: id).data('he') or next
   ScraperWiki.save_sqlite([:id], data) rescue binding.pry
 end
+warn RestClient.post ENV['MORPH_REBUILDER_URL'], {} if ENV['MORPH_REBUILDER_URL']
