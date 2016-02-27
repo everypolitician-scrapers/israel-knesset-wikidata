@@ -28,8 +28,7 @@ require 'wikidata/fetcher'
 
 names = @pages.map { |p| WikiData::Category.new( p, 'en').member_titles }.flatten.uniq
 
-names.each_slice(250) do |sliced|
+names.each_slice(100) do |sliced|
   EveryPolitician::Wikidata.scrape_wikidata(names: { he: [], en: sliced })
 end
 
-warn EveryPolitician::Wikidata.notify_rebuilder
