@@ -27,8 +27,5 @@ require 'wikidata/fetcher'
 ]
 
 names = @pages.map { |p| WikiData::Category.new( p, 'en').member_titles }.flatten.uniq
-
-names.shuffle.each_slice(50) do |sliced|
-  EveryPolitician::Wikidata.scrape_wikidata(names: { he: [], en: sliced })
-end
+EveryPolitician::Wikidata.scrape_wikidata(names: { he: [], en: names }, batch_size: 50)
 
