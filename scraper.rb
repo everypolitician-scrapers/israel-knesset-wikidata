@@ -25,7 +25,10 @@ require 'wikidata/fetcher'
   'Category:Members of the 2nd Knesset (1951–55)',
   'Category:Members of the 1st Knesset (1949–51)',
 ]
-
 names = @pages.map { |p| WikiData::Category.new( p, 'en').member_titles }.flatten.uniq
-EveryPolitician::Wikidata.scrape_wikidata(names: { he: [], en: names })
+
+sparq = 'SELECT ?item WHERE { ?item wdt:P39 wd:Q4047513 . }'
+ids = EveryPolitician::Wikidata.sparql(sparq)
+
+EveryPolitician::Wikidata.scrape_wikidata(ids: ids, names: { he: [], en: names })
 
