@@ -37,5 +37,5 @@ en_names = en_pages.map { |p| WikiData::Category.new(p, 'en').member_titles }.fl
 sparq = 'SELECT ?item WHERE { ?item wdt:P39 wd:Q4047513 . }'
 ids = EveryPolitician::Wikidata.sparql(sparq)
 
-EveryPolitician::Wikidata.scrape_wikidata(ids: ids, names: { he: he_names, en: en_names })
+EveryPolitician::Wikidata.scrape_wikidata(ids: ids, names: { he: he_names, en: en_names }, batch_size: 250)
 
