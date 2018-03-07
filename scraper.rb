@@ -3,7 +3,14 @@
 
 require 'wikidata/fetcher'
 
-@pages = [
+# TODO: add members of earlier Knessets
+# https://he.wikipedia.org/wiki/קטגוריה:חברי_הכנסת_לפי_כנסות
+he_pages = [
+  'קטגוריה:חברי_הכנסת_העשרים',
+]
+he_names = he_pages.map { |p| WikiData::Category.new(p, 'he').member_titles }.flatten.uniq
+
+en_pages = [
   'Category:Members of the 20th Knesset (2015–)',
   'Category:Members of the 19th Knesset (2013–15)',
   'Category:Members of the 18th Knesset (2009–13)',
@@ -25,10 +32,10 @@ require 'wikidata/fetcher'
   'Category:Members of the 2nd Knesset (1951–55)',
   'Category:Members of the 1st Knesset (1949–51)',
 ]
-names = @pages.map { |p| WikiData::Category.new( p, 'en').member_titles }.flatten.uniq
+en_names = en_pages.map { |p| WikiData::Category.new(p, 'en').member_titles }.flatten.uniq
 
 sparq = 'SELECT ?item WHERE { ?item wdt:P39 wd:Q4047513 . }'
 ids = EveryPolitician::Wikidata.sparql(sparq)
 
-EveryPolitician::Wikidata.scrape_wikidata(ids: ids, names: { he: [], en: names })
+EveryPolitician::Wikidata.scrape_wikidata(ids: ids, names: { he: he_names, en: en_names })
 
